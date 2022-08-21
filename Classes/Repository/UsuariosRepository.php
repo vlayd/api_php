@@ -20,11 +20,18 @@ class UsuariosRepository {
      * @param $login
      * @return int
      */
-    public function getRegistroByLogin($login)
-    {
+    public function getRegistroByLogin($login){
         $consulta = 'SELECT * FROM ' . self::TABELA . ' WHERE login = :login';
         $stmt = $this->MySQL->getDb()->prepare($consulta);
         $stmt->bindParam(':login', $login);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+    public function login($login, $senha){
+        $consulta = 'SELECT * FROM ' . self::TABELA . ' WHERE login = :login AND senha = :senha';
+        $stmt = $this->MySQL->getDb()->prepare($consulta);
+        $stmt->bindParam(':login', $login);
+        $stmt->bindParam(':senha', $senha);
         $stmt->execute();
         return $stmt->rowCount();
     }

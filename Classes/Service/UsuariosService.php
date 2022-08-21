@@ -187,7 +187,6 @@ class UsuariosService {
      */
     private function atualizar(){
         if ($this->UsuariosRepository->updateUser($this->dados['id'], $this->dadosCorpoRequest) > 0) {
-            echo "Cheguei aqui";
             $this->UsuariosRepository->getMySQL()->getDb()->commit();
             return ConstantesGenericasUtil::MSG_ATUALIZADO_SUCESSO;
         }

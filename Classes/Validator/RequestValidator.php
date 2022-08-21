@@ -54,7 +54,7 @@ class RequestValidator {
             $this->dadosRequest = JsonUtil::tratarCorpoRequisicaoJson();
         }
         //(13) //var_dump(getallheaders()); descobre a array['Authorization'], que reconhece o token que manda para validar
-        $this->TokensAutorizadosRepository->validarToken(getallheaders()['Authorization']);
+        $this->TokensAutorizadosRepository->validarLoginSenha(getallheaders()['login'], getallheaders()['senha']);
         //(15) pelo tipo do request['metodo'] vai ser chamado pelo nome dele (post(), get(), delete(), pub())
         $metodo = $this->request['metodo'];
         //Primeiro vai ser o get() que vai listar

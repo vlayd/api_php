@@ -8,6 +8,7 @@ use Util\ConstantesGenericasUtil;
 
 class TokensAutorizadosRepository {
     private object $MySQL;
+    private object $UsuariosRepository;
     public const TABELA = 'tokens_autorizados';
 
     /**
@@ -16,6 +17,7 @@ class TokensAutorizadosRepository {
     public function __construct()
     {
         $this->MySQL = new MySQL();
+        $this->UsuariosRepository = new UsuariosRepository();
     }
 
     /**
@@ -38,6 +40,23 @@ class TokensAutorizadosRepository {
             }
         } else {
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TOKEN_VAZIO);
+        }
+    }
+
+    /**
+     * @param $login
+     * @param $senha
+     */
+    public function validarLoginSenha($login, $senha) {
+        if ($login && $senha) {
+            //Se o token não for vazio, vai ser testado se há no bd e se está ativo
+            $consultaLoginSenha = $this->UsuariosRepository->login($login, $senha);
+            if ($consultaLoginSenha !== 1) {
+                header("HTTP/1.1 401 Unauthorized");
+                throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_LOGIN_SENHA_ERRADA);
+            }
+        } else {
+            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_LOGIN_SENHA_VAZIO);
         }
     }
 
