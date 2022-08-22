@@ -95,6 +95,29 @@ class MySQL {
     }
 
     /**
+     * @param $tabela
+     * @param $login
+     * @param $senha
+     * @return mixed
+     */
+    public function getOneByLoginSenha($tabela, $login, $senha) {
+        if ($tabela && $login && $senha) {
+            $consulta = 'SELECT * FROM ' . $tabela . ' WHERE login = :login AND senha = :senha';
+            $stmt = $this->db->prepare($consulta);
+            $stmt->bindParam(':login', $login);
+            $stmt->bindParam(':senha', $senha);
+            $stmt->execute();
+            $totalRegistros = $stmt->rowCount();
+            if ($totalRegistros === 1) {
+                return $stmt->fetch($this->db::FETCH_ASSOC);
+            }
+            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_SEM_RETORNO);
+        }
+
+        throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_LOGIN_SENHA_VAZIO);
+    }
+
+    /**
      * @return object|PDO
      */
     public function getDb() {

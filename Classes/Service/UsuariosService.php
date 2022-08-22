@@ -8,7 +8,7 @@ use Util\ConstantesGenericasUtil;
 
 class UsuariosService {
     public const TABELA = 'usuarios';
-    public const RECURSOS_GET = ['listar'];
+    public const RECURSOS_GET = ['listar', 'logar'];
     public const RECURSOS_POST = ['cadastrar'];
     public const RECURSOS_DELETE = ['deletar'];
     public const RECURSOS_PUT = ['atualizar'];
@@ -42,7 +42,8 @@ class UsuariosService {
         if (in_array($recurso, self::RECURSOS_GET, true)) {
             //Se consta, agora verifica se vem acompanha do id
             //Se sim vai para o método $this->getOneByKey(), se não vai para método do seu próprio nome listar()
-            $retorno = $this->dados['id'] > 0 ? $this->getOneByKey() : $this->$recurso(); //Equivale $this->listar()
+            $retorno = $this->dados['id'] > 0 || $this->dados['recurso'] == 'logar'
+                ? $this->getOneByKey($this->dados['recurso']) : $this->$recurso(); //Equivale $this->listar()
         } else {
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
         }
@@ -141,10 +142,23 @@ class UsuariosService {
     }
 
     /**
+     * @return array
+     */
+    private function logar() {
+        //(22) Pelo método getMySQL() - que representa a classe MySQL, vamos chamar a método getAll() passando a tabela
+        return $this->UsuariosRepository->getMySQL()->getAll(self::TABELA);
+    }
+
+    /**
      * @return mixed
      */
-    private function getOneByKey() {
-        return $this->UsuariosRepository->getMySQL()->getOneByKey(self::TABELA, $this->dados['id']);
+    private function getOneByKey($recurso) {
+        if($recurso == 'listar'){
+            return $this->UsuariosRepository->getMySQL()->getOneByKey(self::TABELA, $this->dados['id']);
+        } elseif ($recurso == 'logar'){
+            return $this->UsuariosRepository->getMySQL()->getOneByLoginSenha(self::TABELA,
+                getallheaders()['login'], getallheaders()['senha']);
+        }
     }
 
     /**

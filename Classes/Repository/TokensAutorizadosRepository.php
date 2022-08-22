@@ -55,6 +55,10 @@ class TokensAutorizadosRepository {
                 header("HTTP/1.1 401 Unauthorized");
                 throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_LOGIN_SENHA_ERRADA);
             }
+//            elseif($consultaLoginSenha == 1 && $recurso == 'logar'){
+//                $mensagem = array('tipo' => 'Sucesso');
+//                echo json_encode($mensagem);exit;
+//            }
         } else {
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_LOGIN_SENHA_VAZIO);
         }

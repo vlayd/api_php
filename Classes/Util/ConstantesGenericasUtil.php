@@ -26,6 +26,7 @@ abstract class ConstantesGenericasUtil
     /* SUCESSO */
     public const MSG_DELETADO_SUCESSO = 'Registro deletado com Sucesso!';
     public const MSG_ATUALIZADO_SUCESSO = 'Registro atualizado com Sucesso!';
+    public const MSG_LOGIN_SUCESSO = 'Login realizado com Sucesso!';
 
     /* RECURSO USUARIOS */
     public const MSG_ERRO_ID_OBRIGATORIO = 'ID é obrigatório!';
