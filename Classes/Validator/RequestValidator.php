@@ -4,6 +4,7 @@ namespace Validator;
 
 use InvalidArgumentException;
 use Repository\TokensAutorizadosRepository;
+use Service\AutosService;
 use Service\UsuariosService;
 use Util\ConstantesGenericasUtil;
 use Util\JsonUtil;
@@ -16,6 +17,7 @@ class RequestValidator {
     const GET = 'GET';
     const DELETE = 'DELETE';
     const USUARIOS = 'USUARIOS';
+    const AUTOS = 'AUTOS';
 
     /**
      * RequestValidator constructor.
@@ -48,7 +50,6 @@ class RequestValidator {
      */
     private function direcionarRequest(){
         //(11) método chamado vê que tipo de request['metodo'] está vindo NÃO é GET OU DELETE
-
         if ($this->request['metodo'] !== self::GET && $this->request['metodo'] !== self::DELETE) {
             //Se NÃO for um desses método é chamado o tratarCorpoRequisicaoJson() e atribuido a variável global dadosRequest
             $this->dadosRequest = JsonUtil::tratarCorpoRequisicaoJson();
@@ -57,8 +58,8 @@ class RequestValidator {
         $this->TokensAutorizadosRepository->validarLoginSenha(getallheaders()['login'], getallheaders()['senha']);
         //(15) pelo tipo do request['metodo'] vai ser chamado pelo nome dele (post(), get(), delete(), pub())
         $metodo = $this->request['metodo'];
-        //Primeiro vai ser o get() que vai listar
-        //Segundo vai ser o post() que vai cadastrar
+        //Primeiro vai ser o get()
+        //Segundo vai ser o post()
         return $this->$metodo();
     }
 
@@ -98,6 +99,10 @@ class RequestValidator {
                     // pelo método validarGet
                     $retorno = $UsuariosService->validarGet();
                     break;
+                case self::AUTOS:
+                    $AutosService = new AutosService($this->request);
+                    $retorno = $AutosService->validarGet();
+                    break;
                 default:
                     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
             }
@@ -122,6 +127,11 @@ class RequestValidator {
                     $UsuariosService->setDadosCorpoRequest($this->dadosRequest);
                     //(21) É só voltar para a classe $UsuariosService, pois a variável global $dados dela já tem o valor
                     $retorno = $UsuariosService->validarPost();
+                    break;
+                case self::AUTOS:
+                    $AutosService = new AutosService($this->request);
+                    $AutosService->setDadosCorpoRequest($this->dadosRequest);
+                    $retorno = $AutosService->validarPost();
                     break;
                 default:
                     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA);
