@@ -12,7 +12,7 @@ class RotasUtil {
 
         //4 com o array $urls formado pelo elementos soltos da rota adicionar ao array $request
         //cada parte recebe uma chave nomeada
-        //Elemento 1: rota (nome do db) e põe tudo em maiúculo
+        //Elemento 1: rota (nome da tabela) e põe tudo em maiúculo
         //Elemento 2: recurso (listar, logar, cadastrar, atualizar e deletar)
         //Elemento 3: id (se houver, só para listar, atualizar e deletar)
         //O tipo de método é reconhecido pelo $_SERVER['REQUEST_METHOD'] : metodo (GET, POST, PUT, DELETE)

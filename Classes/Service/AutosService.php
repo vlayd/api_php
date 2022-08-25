@@ -112,6 +112,5 @@ class AutosService {
         $this->AutosRepository->getMySQLAutos()->getDb()->rollBack();
 
         throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
-
     }
 }

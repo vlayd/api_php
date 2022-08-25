@@ -6,10 +6,10 @@ abstract class ConstantesGenericasUtil
 {
     /* REQUESTS */
     public const TIPO_REQUEST = ['GET', 'POST', 'DELETE', 'PUT'];
-    public const TIPO_GET = ['USUARIOS', 'AUTOS'];
-    public const TIPO_POST = ['USUARIOS', 'AUTOS'];
-    public const TIPO_DELETE = ['USUARIOS'];
-    public const TIPO_PUT = ['USUARIOS'];
+    public const TIPO_GET = ['USUARIOS', 'AUTOS', 'DOCUMENTOS'];
+    public const TIPO_POST = ['USUARIOS', 'AUTOS', 'DOCUMENTOS'];
+    public const TIPO_DELETE = ['USUARIOS', 'DOCUMENTOS'];
+    public const TIPO_PUT = ['USUARIOS', 'DOCUMENTOS'];
 
     /* ERROS */
     public const MSG_ERRO_TIPO_ROTA = 'Rota não permitida!';
@@ -31,6 +31,7 @@ abstract class ConstantesGenericasUtil
     /* RECURSO USUARIOS */
     public const MSG_ERRO_ID_OBRIGATORIO = 'ID é obrigatório!';
     public const MSG_ERRO_LOGIN_EXISTENTE = 'Login já existente!';
+    public const MSG_ERRO_DOC_EXISTENTE = 'Documento já cadastrado!';
     public const MSG_ERRO_LOGIN_SENHA_OBRIGATORIO = 'Login e Senha são obrigatórios!';
 
     /* RETORNO JSON */

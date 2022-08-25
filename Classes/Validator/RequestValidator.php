@@ -5,6 +5,7 @@ namespace Validator;
 use InvalidArgumentException;
 use Repository\TokensAutorizadosRepository;
 use Service\AutosService;
+use Service\DocumentosService;
 use Service\UsuariosService;
 use Util\ConstantesGenericasUtil;
 use Util\JsonUtil;
@@ -18,6 +19,7 @@ class RequestValidator {
     const DELETE = 'DELETE';
     const USUARIOS = 'USUARIOS';
     const AUTOS = 'AUTOS';
+    const DOCUMENTOS = 'DOCUMENTOS';
 
     /**
      * RequestValidator constructor.
@@ -75,6 +77,10 @@ class RequestValidator {
                     $UsuariosService = new UsuariosService($this->request);
                     $retorno = $UsuariosService->validarDelete();
                     break;
+                case self::DOCUMENTOS:
+                    $DocumentosService = new DocumentosService($this->request);
+                    $retorno = $DocumentosService->validarDelete();
+                    break;
                 default:
                     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
             }
@@ -102,6 +108,10 @@ class RequestValidator {
                 case self::AUTOS:
                     $AutosService = new AutosService($this->request);
                     $retorno = $AutosService->validarGet();
+                    break;
+                case self::DOCUMENTOS:
+                    $DocumentosService = new DocumentosService($this->request);
+                    $retorno = $DocumentosService->validarGet();
                     break;
                 default:
                     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
@@ -133,6 +143,11 @@ class RequestValidator {
                     $AutosService->setDadosCorpoRequest($this->dadosRequest);
                     $retorno = $AutosService->validarPost();
                     break;
+                case self::DOCUMENTOS:
+                    $DocumentosService = new DocumentosService($this->request);
+                    $DocumentosService->setDadosCorpoRequest($this->dadosRequest);
+                    $retorno = $DocumentosService->validarPost();
+                    break;
                 default:
                     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA);
             }
@@ -154,6 +169,11 @@ class RequestValidator {
                     $UsuariosService = new UsuariosService($this->request);
                     $UsuariosService->setDadosCorpoRequest($this->dadosRequest);
                     $retorno = $UsuariosService->validarPut();
+                    break;
+                case self::DOCUMENTOS:
+                    $DocumentosService = new DocumentosService($this->request);
+                    $DocumentosService->setDadosCorpoRequest($this->dadosRequest);
+                    $retorno = $DocumentosService->validarPut();
                     break;
                 default:
                     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA);
