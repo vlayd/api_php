@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use Repository\TokensAutorizadosRepository;
 use Service\AutosService;
 use Service\DocumentosService;
+use Service\GruposService;
 use Service\UsuariosService;
 use Util\ConstantesGenericasUtil;
 use Util\JsonUtil;
@@ -20,6 +21,7 @@ class RequestValidator {
     const USUARIOS = 'USUARIOS';
     const AUTOS = 'AUTOS';
     const DOCUMENTOS = 'DOCUMENTOS';
+    const GRUPOS = 'GRUPOS';
 
     /**
      * RequestValidator constructor.
@@ -81,6 +83,10 @@ class RequestValidator {
                     $DocumentosService = new DocumentosService($this->request);
                     $retorno = $DocumentosService->validarDelete();
                     break;
+                case self::GRUPOS:
+                    $GruposService = new GruposService($this->request);
+                    $retorno = $GruposService->validarDelete();
+                    break;
                 default:
                     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
             }
@@ -112,6 +118,10 @@ class RequestValidator {
                 case self::DOCUMENTOS:
                     $DocumentosService = new DocumentosService($this->request);
                     $retorno = $DocumentosService->validarGet();
+                    break;
+                case self::GRUPOS:
+                    $GruposService = new GruposService($this->request);
+                    $retorno = $GruposService->validarGet();
                     break;
                 default:
                     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
@@ -147,6 +157,11 @@ class RequestValidator {
                     $DocumentosService = new DocumentosService($this->request);
                     $DocumentosService->setDadosCorpoRequest($this->dadosRequest);
                     $retorno = $DocumentosService->validarPost();
+                    break;
+                case self::GRUPOS:
+                    $GruposService = new GruposService($this->request);
+                    $GruposService->setDadosCorpoRequest($this->dadosRequest);
+                    $retorno = $GruposService->validarPost();
                     break;
                 default:
                     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_TIPO_ROTA);

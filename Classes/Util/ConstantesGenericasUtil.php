@@ -6,9 +6,9 @@ abstract class ConstantesGenericasUtil
 {
     /* REQUESTS */
     public const TIPO_REQUEST = ['GET', 'POST', 'DELETE', 'PUT'];
-    public const TIPO_GET = ['USUARIOS', 'AUTOS', 'DOCUMENTOS'];
-    public const TIPO_POST = ['USUARIOS', 'AUTOS', 'DOCUMENTOS'];
-    public const TIPO_DELETE = ['USUARIOS', 'DOCUMENTOS'];
+    public const TIPO_GET = ['USUARIOS', 'AUTOS', 'DOCUMENTOS', 'GRUPOS'];
+    public const TIPO_POST = ['USUARIOS', 'AUTOS', 'DOCUMENTOS', 'GRUPOS'];
+    public const TIPO_DELETE = ['USUARIOS', 'DOCUMENTOS', 'GRUPOS'];
     public const TIPO_PUT = ['USUARIOS', 'DOCUMENTOS'];
 
     /* ERROS */
@@ -32,6 +32,7 @@ abstract class ConstantesGenericasUtil
     public const MSG_ERRO_ID_OBRIGATORIO = 'ID é obrigatório!';
     public const MSG_ERRO_LOGIN_EXISTENTE = 'Login já existente!';
     public const MSG_ERRO_DOC_EXISTENTE = 'Documento já cadastrado!';
+    public const MSG_ERRO_GRUPO_EXISTENTE = 'Grupo já cadastrado!';
     public const MSG_ERRO_LOGIN_SENHA_OBRIGATORIO = 'Login e Senha são obrigatórios!';
 
     /* RETORNO JSON */
